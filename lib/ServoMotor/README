@@ -1,0 +1,51 @@
+# ServoMotor Library
+
+## Description
+The ServoMotor component provides an interface for controlling a standard servo motor using the Arduino Servo library. It allows you to set the position of the servo by specifying an angle, making it ideal for robotics, actuators, and precise movement in your projects.
+
+## What it does
+- Initializes and configures the servo control pin
+- Sets the servo to a specific angle (0-180 degrees)
+- Gets the current angle of the servo
+- Provides a simple API for integrating servo control into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the servo's signal wire to a PWM-capable digital output pin on your microcontroller (e.g., D9).
+   - Connect the power (red) wire to 5V and the ground (black/brown) wire to GND.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Signal Pin--> S[Servo Motor: Signal]
+     S --VCC--> V[5V]
+     S --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <ServoMotor.h>
+   
+   ServoMotor servo(9); // Signal pin to D9
+   
+   void setup() {
+       servo.begin();
+       servo.setAngle(90); // Move to 90 degrees
+   }
+   
+   void loop() {
+       servo.setAngle(0);
+       delay(1000);
+       servo.setAngle(180);
+       delay(1000);
+   }
+   ```
+3. **API:**
+   - `ServoMotor(uint8_t pin)`: Constructor, specify the signal pin.
+   - `void begin()`: Initialize the servo and attach it to the pin.
+   - `void setAngle(int angle)`: Set the servo to a specific angle (0-180).
+   - `int getAngle() const`: Get the current angle of the servo.
+
+## Files
+- ServoMotor.h: Header file for the ServoMotor class
+- ServoMotor.cpp: Implementation file for the ServoMotor class

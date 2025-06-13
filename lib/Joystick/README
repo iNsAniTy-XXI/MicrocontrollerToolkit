@@ -1,0 +1,53 @@
+# Joystick Library
+
+## Description
+The Joystick component provides an interface for a 2-axis analog joystick module with a push button. This module allows you to read analog values for X and Y axes (typically using potentiometers inside the joystick) and detect button presses, making it ideal for user input in robotics, games, and control projects.
+
+## What it does
+- Reads analog values from the X and Y axes
+- Detects button presses (digital input)
+- Provides a simple API for integrating joystick input into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the X and Y axis pins to analog input pins on your microcontroller.
+   - Connect the button pin to a digital input pin (with internal or external pull-up resistor).
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --A0--> X[Joystick: X axis]
+     M --A1--> Y[Joystick: Y axis]
+     M --D2--> BTN[Joystick: Button]
+     X --VCC--> V[5V]
+     X --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <Joystick.h>
+   
+   Joystick joystick(A0, A1, 2); // X to A0, Y to A1, button to D2
+   
+   void setup() {
+       joystick.begin();
+   }
+   
+   void loop() {
+       int x = joystick.readX();
+       int y = joystick.readY();
+       if (joystick.isPressed()) {
+           // Do something when the button is pressed
+       }
+   }
+   ```
+3. **API:**
+   - `Joystick(uint8_t pinX, uint8_t pinY, uint8_t pinButton)`: Constructor, specify analog pins for X and Y, and digital pin for button.
+   - `void begin()`: Initialize the pins.
+   - `int readX()`: Read the X axis analog value.
+   - `int readY()`: Read the Y axis analog value.
+   - `bool isPressed()`: Returns true if the button is pressed.
+
+## Files
+- Joystick.h: Header file for the Joystick class
+- Joystick.cpp: Implementation file for the Joystick class

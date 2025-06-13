@@ -1,0 +1,62 @@
+# LCD Library
+
+## Description
+The LCD component provides an interface for controlling a standard character LCD display (such as a 16x2 or 20x4) using the LiquidCrystal library. It allows you to display messages, set the cursor position, and clear the screen, making it ideal for showing information, menus, or feedback in your projects.
+
+## What it does
+- Initializes and configures the LCD display
+- Sets the cursor position
+- Displays messages and text
+- Clears the display
+- Provides access to current cursor position
+
+## How to use
+1. **Wiring:**
+   - Connect the LCD's RS, EN, D4, D5, D6, and D7 pins to digital pins on your microcontroller as specified in your code.
+   - Connect VSS, RW, and K to GND; VDD and A to 5V; VO to a potentiometer for contrast.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --RS--> L[LCD: RS]
+     M --EN--> E[LCD: EN]
+     M --D4--> D4[LCD: D4]
+     M --D5--> D5[LCD: D5]
+     M --D6--> D6[LCD: D6]
+     M --D7--> D7[LCD: D7]
+     L --VSS--> G[Ground]
+     L --VDD--> V[5V]
+     L --VO--> P[Potentiometer]
+     L --RW--> G
+     L --K--> G
+     L --A--> V
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <LCD.h>
+   
+   LCD lcd(12, 11, 5, 4, 3, 2); // RS, EN, D4, D5, D6, D7
+   
+   void setup() {
+       lcd.configureDisplayGrid(16, 2); // 16 columns, 2 rows
+       lcd.setCursor(0, 0);
+       lcd.displayMessage("Hello, World!");
+   }
+   
+   void loop() {
+       // Update display as needed
+   }
+   ```
+3. **API:**
+   - `LCD(int rs, int en, int d4, int d5, int d6, int d7)`: Constructor, specify control and data pins.
+   - `void configureDisplayGrid(int cols, int rows)`: Set up the display size.
+   - `void setCursor(int x, int y)`: Set the cursor to (row, column).
+   - `int getRowIndex()`: Get the current row index.
+   - `int getColumnIndex()`: Get the current column index.
+   - `void displayMessage(const String &message)`: Display a message at the current cursor.
+   - `void clear()`: Clear the display.
+
+## Files
+- LCD.h: Header file for the LCD class
+- LCD.cpp: Implementation file for the LCD class

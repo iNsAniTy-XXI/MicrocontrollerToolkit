@@ -1,0 +1,55 @@
+# Motor Library
+
+## Description
+The Motor component provides an interface for controlling a simple DC motor (3V or 6V) using two digital pins, typically through an H-bridge or transistor circuit. This allows you to control the direction of the motor (forward or backward) and stop it as needed. It is ideal for robotics, vehicles, and other projects requiring basic motor control.
+
+## What it does
+- Initializes and configures the motor control pins
+- Drives the motor forward or backward
+- Stops the motor
+- Provides a simple API for integrating motor control into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the motor terminals to the outputs of an H-bridge or transistor driver circuit.
+   - Connect the control pins (pinA and pinB) to digital output pins on your microcontroller.
+
+   ```mermaid
+   graph TD
+     A[Microcontroller] -->|pinA| B[H-Bridge/Transistor Circuit]
+     A[Microcontroller] -->|pinB| B
+     B -->|OUT1| M[DC Motor]
+     B -->|OUT2| M
+     B -->|VCC| V[Power Supply (3V/6V)]
+     B -->|GND| G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <Motor.h>
+   
+   Motor motor(8, 9); // Control pins 8 and 9
+   
+   void setup() {
+       motor.begin();
+   }
+   
+   void loop() {
+       motor.forward();
+       delay(1000);
+       motor.backward();
+       delay(1000);
+       motor.stop();
+       delay(1000);
+   }
+   ```
+3. **API:**
+   - `Motor(uint8_t pinA, uint8_t pinB)`: Constructor, specify the two control pins.
+   - `void begin()`: Initialize the pins as OUTPUT.
+   - `void forward()`: Drive the motor forward.
+   - `void backward()`: Drive the motor backward.
+   - `void stop()`: Stop the motor.
+
+## Files
+- Motor.h: Header file for the Motor class
+- Motor.cpp: Implementation file for the Motor class

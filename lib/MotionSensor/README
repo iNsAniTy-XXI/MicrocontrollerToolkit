@@ -1,0 +1,47 @@
+# MotionSensor Library
+
+## Description
+The MotionSensor component provides an interface for a PIR (Passive Infrared) motion sensor module, such as the HC-SR501. This module detects movement of people, animals, or objects by sensing changes in infrared radiation. It is commonly used for security, automation, and presence detection in electronics projects.
+
+## What it does
+- Initializes and reads the state of a PIR motion sensor
+- Detects motion events (HIGH when motion is detected, LOW otherwise)
+- Provides a simple API for integrating motion detection into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the sensor's OUT pin to a digital input pin on your microcontroller.
+   - Connect VCC to 5V and GND to ground.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Digital Pin--> O[PIR Sensor: OUT]
+     O --VCC--> V[5V]
+     O --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <MotionSensor.h>
+   
+   MotionSensor motion(7); // Use digital pin 7
+   
+   void setup() {
+       motion.begin();
+   }
+   
+   void loop() {
+       if (motion.isMotionDetected()) {
+           // Do something when motion is detected
+       }
+   }
+   ```
+3. **API:**
+   - `MotionSensor(uint8_t pin)`: Constructor, specify the signal pin.
+   - `void begin()`: Initialize the pin as INPUT.
+   - `bool isMotionDetected()`: Returns true if motion is detected.
+
+## Files
+- MotionSensor.h: Header file for the MotionSensor class
+- MotionSensor.cpp: Implementation file for the MotionSensor class

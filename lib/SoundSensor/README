@@ -1,0 +1,53 @@
+# SoundSensor Library
+
+## Description
+The SoundSensor component provides an interface for reading values from a sound sensor module (microphone module) using a microcontroller such as Arduino. It allows you to detect sound levels and sound events, making it useful for sound-activated projects, noise monitoring, and audio-based triggers.
+
+## What it does
+- Reads the analog value from the sound sensor
+- Detects if the sound level exceeds a specified threshold
+- Provides a simple API for integrating sound detection into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the sensor's OUT pin to an analog input pin on your microcontroller (e.g., A0).
+   - Connect VCC to 5V and GND to ground.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Analog Pin (e.g., A0)--> S[Sound Sensor: OUT]
+     S --VCC--> V[5V]
+     S --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <SoundSensor.h>
+   
+   SoundSensor sound(A0); // OUT to A0
+   
+   void setup() {
+       Serial.begin(9600);
+       sound.begin();
+   }
+   
+   void loop() {
+       int value = sound.read();
+       if (sound.isSoundDetected(500)) {
+           Serial.println("Sound detected!");
+       }
+       Serial.print("Sound level: ");
+       Serial.println(value);
+       delay(200);
+   }
+   ```
+3. **API:**
+   - `SoundSensor(uint8_t pin)`: Constructor, specify the analog pin.
+   - `void begin()`: Initialize the pin as INPUT.
+   - `int read()`: Read the analog value from the sensor.
+   - `bool isSoundDetected(int threshold = 500)`: Returns true if the sound level exceeds the threshold.
+
+## Files
+- SoundSensor.h: Header file for the SoundSensor class
+- SoundSensor.cpp: Implementation file for the SoundSensor class

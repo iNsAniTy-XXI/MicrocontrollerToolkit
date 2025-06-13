@@ -1,0 +1,56 @@
+# RGBLED Library
+
+## Description
+The RGBLED component provides an interface for controlling a common anode or common cathode RGB LED module using a microcontroller such as Arduino. It allows you to set the color of the LED by adjusting the intensity of the red, green, and blue channels using PWM, making it ideal for colorful indicators, lighting effects, and user feedback in your projects.
+
+## What it does
+- Initializes and configures the RGB LED control pins
+- Sets the color of the LED using 8-bit values for red, green, and blue (0-255)
+- Supports both common anode and common cathode modules
+- Turns the LED off
+
+## How to use
+1. **Wiring:**
+   - Connect the R, G, and B pins of the LED to PWM-capable digital output pins on your microcontroller (e.g., D9, D10, D11).
+   - Connect the common pin to 5V (for common anode) or GND (for common cathode).
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --R Pin--> R[RGB LED: R]
+     M --G Pin--> G[RGB LED: G]
+     M --B Pin--> B[RGB LED: B]
+     CA[Common Anode] --to 5V--> V[5V]
+     CC[Common Cathode] --to GND--> GND[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <RGBLED.h>
+   
+   RGBLED led(9, 10, 11, true); // Pins for R, G, B; true for common anode
+   
+   void setup() {
+       led.begin();
+   }
+   
+   void loop() {
+       led.setColor(255, 0, 0); // Red
+       delay(500);
+       led.setColor(0, 255, 0); // Green
+       delay(500);
+       led.setColor(0, 0, 255); // Blue
+       delay(500);
+       led.off();
+       delay(500);
+   }
+   ```
+3. **API:**
+   - `RGBLED(uint8_t pinR, uint8_t pinG, uint8_t pinB, bool commonAnode = false)`: Constructor, specify the pins and type.
+   - `void begin()`: Initialize the pins as OUTPUT.
+   - `void setColor(uint8_t r, uint8_t g, uint8_t b)`: Set the color (0-255 for each channel).
+   - `void off()`: Turn off the LED.
+
+## Files
+- RGBLED.h: Header file for the RGBLED class
+- RGBLED.cpp: Implementation file for the RGBLED class

@@ -1,0 +1,53 @@
+# Buzzer Library
+
+## Description
+The Buzzer component provides an easy way to control a passive buzzer module using a microcontroller such as Arduino. A passive buzzer can generate tones of different frequencies using PWM (pulse-width modulation) or the `tone()` function, allowing you to play simple melodies, beeps, or sound notifications in your projects.
+
+## What it does
+- Turns the passive buzzer on or off
+- Beeps the buzzer for a specified duration
+- Plays tones of specific frequencies and durations
+- Stops any currently playing tone
+
+## How to use
+1. **Wiring:**
+   - Connect the buzzer's control pin to a PWM-capable digital output pin on your microcontroller.
+   - Connect the other pin to GND (for most modules).
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --PWM Pin--> B[Passive Buzzer: +]
+     B --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <Buzzer.h>
+   
+   Buzzer buzzer(9); // Use digital pin 9
+   
+   void setup() {
+       buzzer.begin();
+   }
+   
+   void loop() {
+       buzzer.beep(200);           // Beep for 200 ms
+       delay(500);
+       buzzer.playTone(1000, 300); // Play 1kHz tone for 300 ms
+       delay(500);
+       buzzer.off();               // Ensure buzzer is off
+   }
+   ```
+3. **API:**
+   - `Buzzer(uint8_t pin)`: Constructor, specify the control pin.
+   - `void begin()`: Initialize the pin as OUTPUT.
+   - `void on()`: Turn the buzzer on (constant sound).
+   - `void off()`: Turn the buzzer off.
+   - `void beep(unsigned int durationMs = 100)`: Beep for a specified duration (ms).
+   - `void playTone(unsigned int frequency, unsigned long durationMs = 0)`: Play a tone at a given frequency (Hz) and duration (ms).
+   - `void stopTone()`: Stop any currently playing tone.
+
+## Files
+- Buzzer.h: Header file for the Buzzer class
+- Buzzer.cpp: Implementation file for the Buzzer class

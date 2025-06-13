@@ -1,0 +1,52 @@
+# UltrasonicSensor Library
+
+## Description
+The UltrasonicSensor component provides an interface for controlling and reading distance measurements from an ultrasonic sensor module (such as the HC-SR04). It allows you to measure the distance to an object using sound waves, making it ideal for obstacle detection, robotics, and automation projects.
+
+## What it does
+- Initializes and configures the trigger and echo pins
+- Sends an ultrasonic pulse and measures the time for the echo to return
+- Calculates the distance to an object based on the speed of sound
+- Provides a simple API for integrating distance measurement into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the sensor's VCC to 5V, GND to ground, TRIG to a digital output pin, and ECHO to a digital input pin on your microcontroller.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --TRIG Pin--> U[Ultrasonic Sensor: TRIG]
+     M --ECHO Pin--> U[Ultrasonic Sensor: ECHO]
+     U --VCC--> V[5V]
+     U --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <UltrasonicSensor.h>
+   
+   UltrasonicSensor sensor(7, 8); // TRIG to D7, ECHO to D8
+   
+   void setup() {
+       Serial.begin(9600);
+       sensor.begin();
+   }
+   
+   void loop() {
+       float distance = sensor.readDistanceCM();
+       Serial.print("Distance: ");
+       Serial.print(distance);
+       Serial.println(" cm");
+       delay(500);
+   }
+   ```
+3. **API:**
+   - `UltrasonicSensor(uint8_t trigPin, uint8_t echoPin)`: Constructor, specify the trigger and echo pins.
+   - `void begin()`: Initialize the pins.
+   - `float readDistanceCM()`: Read the distance in centimeters.
+   - `float readDistanceIN()`: Read the distance in inches.
+
+## Files
+- UltrasonicSensor.h: Header file for the UltrasonicSensor class
+- UltrasonicSensor.cpp: Implementation file for the UltrasonicSensor class

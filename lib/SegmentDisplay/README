@@ -1,0 +1,55 @@
+# SegmentDisplay Library
+
+## Description
+The SegmentDisplay component provides an interface for controlling a 4-digit 7-segment display (common cathode, direct drive) using a microcontroller such as Arduino. It allows you to display numbers on the display by multiplexing the digits, making it ideal for clocks, counters, and numeric indicators in your projects.
+
+## What it does
+- Initializes and configures the digit and segment control pins
+- Displays numbers (0-9999) on the 4-digit 7-segment display
+- Clears the display
+- Supports multiplexing for persistence of vision
+
+## How to use
+1. **Wiring:**
+   - Connect the 4 digit control pins to digital output pins on your microcontroller.
+   - Connect the 8 segment pins (A-G, DP) to digital output pins on your microcontroller.
+   - Use current-limiting resistors for each segment if required by your display.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Digit Pins--> D[4-Digit 7-Segment Display: DIG1-DIG4]
+     M --Segment Pins--> S[4-Digit 7-Segment Display: A-G, DP]
+     D --Common Cathode--> GND[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <SegmentDisplay.h>
+   
+   uint8_t digitPins[4] = {2, 3, 4, 5};
+   uint8_t segmentPins[8] = {6, 7, 8, 9, 10, 11, 12, 13};
+   SegmentDisplay display(digitPins, segmentPins);
+   
+   void setup() {
+       display.begin();
+   }
+   
+   void loop() {
+       display.displayNumber(1234);
+       // Call displayNumber() repeatedly for persistence
+   }
+   ```
+3. **API:**
+   - `SegmentDisplay(const uint8_t digitPins[4], const uint8_t segmentPins[8])`: Constructor, specify digit and segment pins.
+   - `void begin()`: Initialize the pins as OUTPUT.
+   - `void displayNumber(int number)`: Display a number (0-9999).
+   - `void clear()`: Clear the display.
+
+## Note
+- For multiplexing, call displayNumber() repeatedly in your loop for persistence.
+- For TM1637-based modules, use a dedicated library instead.
+
+## Files
+- SegmentDisplay.h: Header file for the SegmentDisplay class
+- SegmentDisplay.cpp: Implementation file for the SegmentDisplay class

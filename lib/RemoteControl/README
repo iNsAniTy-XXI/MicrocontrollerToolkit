@@ -1,0 +1,57 @@
+# RemoteControl Library
+
+## Description
+The RemoteControl component provides an interface for receiving and decoding IR (infrared) remote control signals using the IRremote library. This allows your microcontroller to respond to button presses from a standard IR remote, making it ideal for remote control of devices, menu navigation, and user input in your projects.
+
+## What it does
+- Initializes and configures the IR receiver
+- Detects and decodes button presses from an IR remote
+- Provides access to the received button code
+- Allows you to resume listening for new signals
+
+## How to use
+1. **Wiring:**
+   - Connect the IR receiver module's OUT pin to a digital input pin on your microcontroller (e.g., D2).
+   - Connect VCC and GND to 5V and ground, respectively.
+
+   ```mermaid
+   graph TD
+     R[IR Remote] --IR Signal--> IRR[IR Receiver Module]
+     IRR --OUT--> M[Microcontroller (e.g., D2)]
+     IRR --VCC--> V[5V]
+     IRR --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <RemoteControl.h>
+   
+   RemoteControl remote(2); // IR receiver OUT to D2
+   
+   void setup() {
+       Serial.begin(9600);
+       remote.begin();
+   }
+   
+   void loop() {
+       if (remote.isButtonPressed()) {
+           unsigned long code = remote.getButtonCode();
+           Serial.print("Button code: ");
+           Serial.println(code, HEX);
+           remote.resume();
+       }
+   }
+   ```
+3. **API:**
+   - `RemoteControl(uint8_t recvPin)`: Constructor, specify the IR receiver pin.
+   - `void begin()`: Initialize the IR receiver.
+   - `bool isButtonPressed()`: Returns true if a button is pressed.
+   - `unsigned long getButtonCode()`: Get the code of the pressed button.
+   - `void resume()`: Resume listening for new signals.
+
+## Files
+- RemoteControl.h: Header file for the RemoteControl class
+- RemoteControl.cpp: Implementation file for the RemoteControl class
+
+## Dependencies
+- IRremote library (install via PlatformIO or Arduino Library Manager)

@@ -1,0 +1,53 @@
+# RotaryEncoder Library
+
+## Description
+The RotaryEncoder component provides an interface for reading values from a rotary encoder module with a push button. This module allows you to detect rotational position changes (increment/decrement) and button presses, making it ideal for user input, menu navigation, and control in embedded projects.
+
+## What it does
+- Initializes and configures the rotary encoder and button pins
+- Reads the current position (incremented or decremented as the knob is turned)
+- Detects button presses
+- Provides a simple API for integrating rotary encoder input into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the encoder's A and B pins to digital input pins on your microcontroller.
+   - Connect the button pin to a digital input pin (with internal or external pull-up resistor).
+   - Connect VCC and GND as required by your module.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --A Pin--> A[Rotary Encoder: A]
+     M --B Pin--> B[Rotary Encoder: B]
+     M --Button Pin--> BTN[Rotary Encoder: Button]
+     A --VCC--> V[5V]
+     B --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <RotaryEncoder.h>
+   
+   RotaryEncoder encoder(2, 3, 4); // A to D2, B to D3, button to D4
+   
+   void setup() {
+       encoder.begin();
+   }
+   
+   void loop() {
+       int pos = encoder.read();
+       if (encoder.isButtonPressed()) {
+           // Do something when the button is pressed
+       }
+   }
+   ```
+3. **API:**
+   - `RotaryEncoder(uint8_t pinA, uint8_t pinB, uint8_t buttonPin)`: Constructor, specify the pins.
+   - `void begin()`: Initialize the pins as INPUT.
+   - `int read()`: Get the current position (incremented/decremented).
+   - `bool isButtonPressed()`: Returns true if the button is pressed.
+
+## Files
+- RotaryEncoder.h: Header file for the RotaryEncoder class
+- RotaryEncoder.cpp: Implementation file for the RotaryEncoder class

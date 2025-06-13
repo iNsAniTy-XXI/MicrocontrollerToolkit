@@ -1,0 +1,52 @@
+# Potentiometer Library
+
+## Description
+The Potentiometer component provides an interface for reading values from a 10K potentiometer using a microcontroller such as Arduino. It allows you to measure the position of the potentiometer knob as an analog value or as a voltage, making it useful for user input, variable resistance, or analog control in your projects.
+
+## What it does
+- Reads the raw analog value from the potentiometer (0-1023)
+- Converts the analog value to a voltage based on a reference voltage
+- Provides a simple API for integrating potentiometer input into your code
+
+## How to use
+1. **Wiring:**
+   - Connect one outer pin of the potentiometer to 5V (VCC).
+   - Connect the other outer pin to GND.
+   - Connect the middle (wiper) pin to an analog input pin on your microcontroller (e.g., A0).
+
+   ```mermaid
+   graph TD
+     V[VCC 5V] --+-- P1[Potentiometer]
+     G[GND] --+-- P3[Potentiometer]
+     P2[Potentiometer] -- Analog Pin (e.g., A0)
+     P1 --|left pin| P2 --|middle pin| P3 --|right pin| G
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <Potentiometer.h>
+   
+   Potentiometer pot(A0); // Middle pin to A0
+   
+   void setup() {
+       Serial.begin(9600);
+       pot.begin();
+   }
+   
+   void loop() {
+       int raw = pot.readRaw();
+       float voltage = pot.readVoltage();
+       Serial.print("Raw: "); Serial.print(raw);
+       Serial.print(" | Voltage: "); Serial.println(voltage);
+       delay(500);
+   }
+   ```
+3. **API:**
+   - `Potentiometer(uint8_t pin)`: Constructor, specify the analog pin.
+   - `void begin()`: Initialize the pin as INPUT.
+   - `int readRaw()`: Read the raw analog value (0-1023).
+   - `float readVoltage(float referenceVoltage = 5.0)`: Read the voltage at the wiper pin.
+
+## Files
+- Potentiometer.h: Header file for the Potentiometer class
+- Potentiometer.cpp: Implementation file for the Potentiometer class

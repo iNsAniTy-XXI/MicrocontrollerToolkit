@@ -1,0 +1,59 @@
+# GY521 Library
+
+## Description
+The GY521 component provides an interface for the GY-521 module, which is based on the MPU-6050 sensor. This sensor combines a 3-axis accelerometer and a 3-axis gyroscope, allowing you to measure acceleration, angular velocity, and temperature. The module communicates with your microcontroller via I2C and is commonly used for motion tracking, orientation sensing, and gesture detection in robotics and embedded projects.
+
+## What it does
+- Initializes and communicates with the MPU-6050 sensor over I2C
+- Reads raw accelerometer and gyroscope data (X, Y, Z axes)
+- Reads temperature data from the sensor
+- Checks if the sensor is connected and responding
+
+## How to use
+1. **Wiring:**
+   - Connect the GY-521 module's VCC to 3.3V or 5V, GND to GND, SDA to the microcontroller's SDA, and SCL to SCL.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --SDA--> S[GY-521: SDA]
+     M --SCL--> C[GY-521: SCL]
+     S --VCC--> V[3.3V/5V]
+     S --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <GY521.h>
+   
+   GY521 imu;
+   
+   void setup() {
+       Serial.begin(9600);
+       imu.begin();
+       if (!imu.isConnected()) {
+           Serial.println("GY-521 not detected!");
+           while (1);
+       }
+   }
+   
+   void loop() {
+       int16_t ax, ay, az, gx, gy, gz;
+       imu.readRaw(ax, ay, az, gx, gy, gz);
+       float temp = imu.readTemperature();
+       Serial.print("Accel: "); Serial.print(ax); Serial.print(", "); Serial.print(ay); Serial.print(", "); Serial.print(az);
+       Serial.print(" | Gyro: "); Serial.print(gx); Serial.print(", "); Serial.print(gy); Serial.print(", "); Serial.print(gz);
+       Serial.print(" | Temp: "); Serial.println(temp);
+       delay(500);
+   }
+   ```
+3. **API:**
+   - `GY521(uint8_t address = 0x68)`: Constructor, specify I2C address (default 0x68).
+   - `void begin()`: Initialize the sensor and I2C communication.
+   - `bool isConnected()`: Check if the sensor is detected on the I2C bus.
+   - `void readRaw(int16_t &ax, int16_t &ay, int16_t &az, int16_t &gx, int16_t &gy, int16_t &gz)`: Read raw accelerometer and gyroscope data.
+   - `float readTemperature()`: Read temperature in Celsius.
+
+## Files
+- GY521.h: Header file for the GY521 class
+- GY521.cpp: Implementation file for the GY521 class

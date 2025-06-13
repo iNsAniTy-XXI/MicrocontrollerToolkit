@@ -1,0 +1,53 @@
+# StepperMotor Library
+
+## Description
+The StepperMotor component provides an interface for controlling a 4-wire stepper motor (such as the 28BYJ-48) without external libraries. It allows you to move the motor a specified number of steps in either direction at a configurable speed, making it ideal for precise positioning, robotics, and automation projects.
+
+## What it does
+- Initializes and configures the stepper motor control pins
+- Moves the motor forward or backward by a specified number of steps
+- Allows you to set a custom step sequence if needed
+- Provides a simple API for integrating stepper motor control into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the four control pins of the stepper motor to digital output pins on your microcontroller (through a driver or ULN2003 board if required).
+   - Connect the motor's power and ground as specified by your driver board.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Pin1--> S[Stepper Motor: IN1]
+     M --Pin2--> S[Stepper Motor: IN2]
+     M --Pin3--> S[Stepper Motor: IN3]
+     M --Pin4--> S[Stepper Motor: IN4]
+     S --Power--> V[5V/12V]
+     S --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <StepperMotor.h>
+   
+   StepperMotor stepper(2, 3, 4, 5); // IN1, IN2, IN3, IN4
+   
+   void setup() {
+       stepper.begin();
+   }
+   
+   void loop() {
+       stepper.step(100);   // Move 100 steps forward
+       delay(1000);
+       stepper.step(-100);  // Move 100 steps backward
+       delay(1000);
+   }
+   ```
+3. **API:**
+   - `StepperMotor(uint8_t pin1, uint8_t pin2, uint8_t pin3, uint8_t pin4)`: Constructor, specify the four control pins.
+   - `void begin()`: Initialize the pins as OUTPUT.
+   - `void step(int steps, int speedMs = 5)`: Move the motor by a number of steps at the given speed (ms per step).
+   - `void setStepSequence(const uint8_t sequence[4][4])`: Set a custom step sequence.
+
+## Files
+- StepperMotor.h: Header file for the StepperMotor class
+- StepperMotor.cpp: Implementation file for the StepperMotor class

@@ -1,0 +1,51 @@
+# ActiveBuzzer Library
+
+## Description
+The ActiveBuzzer component provides an easy way to control an active buzzer module using a microcontroller such as Arduino. An active buzzer generates sound (a fixed tone) when powered, and can be turned on or off by setting its control pin HIGH or LOW. This module is useful for simple sound notifications, alarms, or feedback in your projects.
+
+## What it does
+- Turns the active buzzer on (sound) or off (silent)
+- Allows you to beep the buzzer for a specified duration
+- Lets you check if the buzzer is currently on
+
+## How to use
+1. **Wiring:**
+   - Connect the buzzer's control pin to a digital output pin on your microcontroller.
+   - Connect the other pin to GND (for most modules).
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Digital Pin--> B[Active Buzzer: +]
+     B --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <ActiveBuzzer.h>
+   
+   ActiveBuzzer buzzer(8); // Use digital pin 8
+   
+   void setup() {
+       buzzer.begin();
+   }
+   
+   void loop() {
+       buzzer.on();      // Turn buzzer on
+       delay(500);
+       buzzer.off();     // Turn buzzer off
+       delay(500);
+       buzzer.beep(200); // Beep for 200 ms
+   }
+   ```
+3. **API:**
+   - `ActiveBuzzer(uint8_t pin)`: Constructor, specify the control pin.
+   - `void begin()`: Initialize the pin as OUTPUT.
+   - `void on()`: Turn the buzzer on.
+   - `void off()`: Turn the buzzer off.
+   - `void beep(unsigned int durationMs = 100)`: Beep for a specified duration (ms).
+   - `bool isOn() const`: Check if the buzzer is currently on.
+
+## Files
+- ActiveBuzzer.h: Header file for the ActiveBuzzer class
+- ActiveBuzzer.cpp: Implementation file for the ActiveBuzzer class

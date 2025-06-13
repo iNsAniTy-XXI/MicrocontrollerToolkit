@@ -1,0 +1,53 @@
+# LED Library
+
+## Description
+The LED component provides a simple interface for controlling a single digital LED using a microcontroller such as Arduino. It allows you to turn the LED on or off, toggle its state, and check whether it is currently on. This is useful for status indicators, feedback, or simple output in your projects.
+
+## What it does
+- Turns the LED on or off
+- Toggles the LED state
+- Checks if the LED is currently on
+
+## How to use
+1. **Wiring:**
+   - Connect the LED's anode (longer leg) to a digital output pin through a current-limiting resistor (e.g., 220Ω).
+   - Connect the cathode (shorter leg) to GND.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Digital Pin--> L[LED: Anode (long leg)]
+     L --Resistor (220Ω)--> R[LED: Anode]
+     L --Cathode (short leg)--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <LED.h>
+   
+   LED led(13); // Use digital pin 13
+   
+   void setup() {
+       led.begin();
+   }
+   
+   void loop() {
+       led.turnOn();
+       delay(500);
+       led.turnOff();
+       delay(500);
+       led.toggle();
+       delay(500);
+   }
+   ```
+3. **API:**
+   - `LED(uint8_t pin)`: Constructor, specify the control pin.
+   - `void begin()`: Initialize the pin as OUTPUT.
+   - `void turnOn()`: Turn the LED on.
+   - `void turnOff()`: Turn the LED off.
+   - `void toggle()`: Toggle the LED state.
+   - `bool isOn() const`: Check if the LED is currently on.
+
+## Files
+- LED.h: Header file for the LED class
+- LED.cpp: Implementation file for the LED class

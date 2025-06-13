@@ -1,0 +1,49 @@
+# Button Library
+
+## Description
+The Button component provides a simple and reliable way to handle digital button input with software debouncing. It helps you detect button presses and avoid false triggers caused by mechanical noise or bouncing when the button is pressed or released.
+
+## What it does
+- Reads the state of a digital button (pressed or not pressed)
+- Implements debouncing to filter out noise and bouncing
+- Provides an easy-to-use interface for checking button state in your code
+
+## How to use
+1. **Wiring:**
+   - Connect one side of the button to a digital input pin on your microcontroller.
+   - Connect the other side to GND (for pull-up configuration) or VCC (for pull-down).
+   - Use an external pull-down or pull-up resistor if needed, or enable the internal pull-up in your code.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Digital Pin--> B[Button: 1st leg]
+     B --2nd leg--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <Button.h>
+   
+   Button button(2); // Use digital pin 2
+   
+   void setup() {
+       button.begin();
+   }
+   
+   void loop() {
+       button.update();
+       if (button.isPressed()) {
+           // Do something when the button is pressed
+       }
+   }
+   ```
+3. **API:**
+   - `Button(uint8_t pin, unsigned long debounceDelay = 50)`: Constructor, specify the pin and optional debounce delay (ms).
+   - `void begin()`: Initialize the pin as INPUT.
+   - `void update()`: Update the button state (call this in your loop).
+   - `bool isPressed()`: Returns true if the button is currently pressed.
+
+## Files
+- Button.h: Header file for the Button class
+- Button.cpp: Implementation file for the Button class

@@ -1,0 +1,51 @@
+# SevenSegment Library
+
+## Description
+The SevenSegment component provides an interface for controlling a single-digit 7-segment display (common cathode, direct drive) using a microcontroller such as Arduino. It allows you to display digits (0-9) by setting the appropriate segments, making it ideal for numeric indicators, counters, and simple displays in your projects.
+
+## What it does
+- Initializes and configures the segment control pins
+- Displays a digit (0-9) on the 7-segment display
+- Clears the display
+
+## How to use
+1. **Wiring:**
+   - Connect the 8 segment pins (A-G, DP) to digital output pins on your microcontroller.
+   - Connect the common cathode pin to GND.
+   - Use current-limiting resistors for each segment if required by your display.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Segment Pins--> S[7-Segment Display: A-G, DP]
+     S --Common Cathode--> GND[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <SevenSegment.h>
+   
+   uint8_t segmentPins[8] = {2, 3, 4, 5, 6, 7, 8, 9};
+   SevenSegment display(segmentPins);
+   
+   void setup() {
+       display.begin();
+   }
+   
+   void loop() {
+       for (uint8_t i = 0; i < 10; ++i) {
+           display.displayDigit(i);
+           delay(1000);
+       }
+       display.clear();
+   }
+   ```
+3. **API:**
+   - `SevenSegment(const uint8_t segmentPins[8])`: Constructor, specify segment pins.
+   - `void begin()`: Initialize the pins as OUTPUT.
+   - `void displayDigit(uint8_t digit)`: Display a digit (0-9).
+   - `void clear()`: Clear the display.
+
+## Files
+- SevenSegment.h: Header file for the SevenSegment class
+- SevenSegment.cpp: Implementation file for the SevenSegment class

@@ -1,0 +1,55 @@
+# TempHumiditySensor Library
+
+## Description
+The TempHumiditySensor component provides an interface for reading temperature and humidity using a DHT11 or DHT22 sensor. It allows you to easily measure environmental conditions in your projects, making it ideal for weather stations, automation, and data logging.
+
+## What it does
+- Initializes and configures the DHT sensor
+- Reads temperature (Celsius or Fahrenheit)
+- Reads humidity (%RH)
+- Provides a simple API for integrating temperature and humidity sensing into your code
+
+## How to use
+1. **Wiring:**
+   - Connect the sensor's VCC to 5V, GND to ground, and DATA to a digital input pin on your microcontroller (e.g., D2).
+   - Use a 10kΩ pull-up resistor between DATA and VCC if required by your sensor.
+
+   ```mermaid
+   graph TD
+     M[Microcontroller]
+     M --Data Pin--> S[DHT11/DHT22: DATA]
+     S --VCC--> V[5V]
+     S --GND--> G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <TempHumiditySensor.h>
+   
+   TempHumiditySensor sensor(2); // DATA to D2
+   
+   void setup() {
+       Serial.begin(9600);
+       sensor.begin();
+   }
+   
+   void loop() {
+       float temp = sensor.readTemperature();
+       float hum = sensor.readHumidity();
+       Serial.print("Temp: "); Serial.print(temp);
+       Serial.print(" C, Humidity: "); Serial.println(hum);
+       delay(2000);
+   }
+   ```
+3. **API:**
+   - `TempHumiditySensor(uint8_t pin, uint8_t type = DHT11)`: Constructor, specify the data pin and sensor type.
+   - `void begin()`: Initialize the sensor.
+   - `float readTemperature(bool isFahrenheit = false)`: Read temperature (Celsius or Fahrenheit).
+   - `float readHumidity()`: Read humidity (%RH).
+
+## Files
+- TempHumiditySensor.h: Header file for the TempHumiditySensor class
+- TempHumiditySensor.cpp: Implementation file for the TempHumiditySensor class
+
+## Dependencies
+- DHT sensor library (install via PlatformIO or Arduino Library Manager)

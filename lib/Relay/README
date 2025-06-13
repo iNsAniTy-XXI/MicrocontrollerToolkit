@@ -1,0 +1,56 @@
+# Relay Library
+
+## Description
+The Relay component provides an interface for controlling a 5V relay module (active high or active low) using a microcontroller such as Arduino. A relay allows you to switch high-voltage or high-current devices (like lamps, fans, or appliances) on and off from your low-voltage microcontroller, making it ideal for automation and control projects.
+
+## What it does
+- Initializes and configures the relay control pin
+- Turns the relay on or off
+- Toggles the relay state
+- Supports both active high and active low relay modules
+- Lets you check if the relay is currently on
+
+## How to use
+1. **Wiring:**
+   - Connect the relay module's IN pin to a digital output pin on your microcontroller.
+   - Connect VCC and GND to 5V and ground, respectively.
+   - Connect the relay's NO (Normally Open), NC (Normally Closed), and COM (Common) terminals to your load as needed.
+
+   ```mermaid
+   graph TD
+     A[Microcontroller] -->|Digital Pin| R[Relay Module]
+     R -->|NO/NC/COM| L[Load (Lamp, Fan, etc.)]
+     R -->|VCC| V[5V]
+     R -->|GND| G[Ground]
+   ```
+
+2. **Code Example:**
+   ```cpp
+   #include <Relay.h>
+   
+   Relay relay(7); // Use digital pin 7
+   
+   void setup() {
+       relay.begin();
+   }
+   
+   void loop() {
+       relay.on();
+       delay(1000);
+       relay.off();
+       delay(1000);
+       relay.toggle();
+       delay(1000);
+   }
+   ```
+3. **API:**
+   - `Relay(uint8_t pin, bool activeHigh = true)`: Constructor, specify the control pin and logic type.
+   - `void begin()`: Initialize the pin as OUTPUT.
+   - `void on()`: Turn the relay on.
+   - `void off()`: Turn the relay off.
+   - `void toggle()`: Toggle the relay state.
+   - `bool isOn() const`: Check if the relay is currently on.
+
+## Files
+- Relay.h: Header file for the Relay class
+- Relay.cpp: Implementation file for the Relay class
